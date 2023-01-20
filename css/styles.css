@@ -10,8 +10,11 @@ body {
 
 main {
     width: 375px;
-    height: 6500px;
     background-color: #f3f3f3;
+}
+
+ul {
+    margin: 80px 0px;
 }
 
 header {
@@ -67,4 +70,11 @@ div ion-icon {
 
 div ion-icon:hover {
     cursor: pointer;
+}
+
+li {
+    background-color: lightcoral;
+    margin: 4px 0px;
+    padding: 9px;
+    flex-wrap: wrap;
 }
