@@ -6,6 +6,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    font-family: 'Roboto', sans-serif;
 }
 
 main {
@@ -15,6 +16,7 @@ main {
 
 ul {
     margin: 80px 0px;
+    overflow-x: scroll;
 }
 
 header {
@@ -54,7 +56,6 @@ input {
     width: 100%;
     padding: 12px;
     border: none;
-    font-family: 'Roboto', sans-serif;
     font-size: 18px;
     font-style: italic;
     outline: none;
@@ -73,8 +74,37 @@ div ion-icon:hover {
 }
 
 li {
-    background-color: lightcoral;
+    background-color: white;
     margin: 4px 0px;
     padding: 9px;
     flex-wrap: wrap;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 400;
+}
+
+span {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    margin-right: 5px;
+}
+
+span:nth-of-type(1) {
+    color: #AAAAAA;
+}
+
+span:nth-of-type(2),
+span:nth-of-type(3) {
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 700;
+}
+
+.status {
+    background-color: #DCDCDC;
+}
+
+.private_message {
+    background-color: #FFDEDE;
 }
