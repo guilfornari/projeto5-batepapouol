@@ -6,8 +6,7 @@ let messageObject = {
     to: "",
     text: "",
     type: "",
-}
-let messageBox;
+};
 
 function getMessagesFromTheServer() {
     const promise = axios.get("https://mock-api.driven.com.br/api/v6/uol/messages");
@@ -31,7 +30,7 @@ function startChat() {
 }
 
 function printText(message) {
-    let messageBox = document.querySelector('ul');
+    const messageBox = document.querySelector('ul');
     if (message.type === "private_message" && message.from === userName) {
         messageBox.innerHTML += `
         <li class="private_message" data-test="message">
@@ -63,19 +62,20 @@ function showLastMessage() {
 }
 
 function createUsername() {
-    userName = prompt("Qual é o teu lindo nome, snowflakes?")
+    userName = prompt("Qual é o teu lindo nome, snowflakes?");
     userNameObject = { name: userName };
     const promise = axios.post('https://mock-api.driven.com.br/api/v6/uol/participants', userNameObject);
     promise.then(loggedIn);
     promise.catch(logInProblem);
 }
 
-function loggedIn(response) {
+function loggedIn() {
     getMessagesFromTheServer();
 }
 
 function logInProblem(error) {
     if (error.response.status === 400) {
+        alert("Este nome já existe. Seja mais criativo, por favor.")
         createUsername();
     }
 }
@@ -86,7 +86,7 @@ function keepconnected() {
     promise.catch(statusProblem);
 }
 
-function statusProblem(error) {
+function statusProblem() {
     alert("Perdeste conexão com o servidor");
 }
 
@@ -98,18 +98,18 @@ function sendMessages() {
         to: "Todos",
         text: message,
         type: "message"
-    }
+    };
     const promise = axios.post('https://mock-api.driven.com.br/api/v6/uol/messages', messageObject);
     promise.then(receivedMessage);
     promise.catch(messageNotReceived);
     document.querySelector("input").value = "";
 }
 
-function receivedMessage(response) {
+function receivedMessage() {
     getMessagesFromTheServer();
 }
 
-function messageNotReceived(error) {
+function messageNotReceived() {
     alert("Por favor, tente conectar novamente");
     window.location.reload();
 }
