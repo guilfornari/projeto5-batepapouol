@@ -30,6 +30,7 @@ function startChat() {
 
 function printText(message) {
     let messageBox = document.querySelector('ul');
+    messageBox.innerHTML = "";
     if (message.type === "private_message" && message.from === userName) {
         messageBox.innerHTML += `
         <li class="private_message" data-test="message">
@@ -69,7 +70,7 @@ function createUsername() {
 }
 
 function loggedIn(response) {
-    console.log(response);
+    getMessagesFromTheServer();
 }
 
 function logInProblem(error) {
@@ -113,13 +114,5 @@ function messageNotReceived(error) {
 
 
 createUsername();
-getMessagesFromTheServer();
 setInterval(getMessagesFromTheServer, 3000);
 setInterval(keepconnected, 5000);
-
-
-
-
-
-
-
