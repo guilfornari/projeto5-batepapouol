@@ -17,6 +17,7 @@ function getMessagesFromTheServer() {
 
 function getData(response) {
     messagesFromServer = response.data;
+    document.querySelector("ul").innerHTML = "";
     startChat();
     showLastMessage();
 }
@@ -81,6 +82,7 @@ function logInProblem(error) {
 
 function keepconnected() {
     const promise = axios.post('https://mock-api.driven.com.br/api/v6/uol/status', userNameObject);
+    promise.then();
     promise.catch(statusProblem);
 }
 
