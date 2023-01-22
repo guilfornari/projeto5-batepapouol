@@ -81,6 +81,8 @@ li {
     font-size: 14px;
     line-height: 20px;
     font-weight: 400;
+    overflow: hidden;
+    word-wrap: break-word;
 }
 
 span {
