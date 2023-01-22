@@ -7,6 +7,7 @@ let messageObject = {
     text: "",
     type: "",
 }
+let messageBox;
 
 function getMessagesFromTheServer() {
     const promise = axios.get("https://mock-api.driven.com.br/api/v6/uol/messages");
@@ -30,7 +31,6 @@ function startChat() {
 
 function printText(message) {
     let messageBox = document.querySelector('ul');
-    messageBox.innerHTML = "";
     if (message.type === "private_message" && message.from === userName) {
         messageBox.innerHTML += `
         <li class="private_message" data-test="message">
