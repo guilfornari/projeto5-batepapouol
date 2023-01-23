@@ -1,5 +1,6 @@
 let messagesFromServer = [];
 let userName;
+let checkStatus;
 let userNameObject = { name: "" };
 let messageObject = {
     from: "",
@@ -17,6 +18,7 @@ function getMessagesFromTheServer() {
 }
 
 function getData(response) {
+
     messagesFromServer = response.data;
     document.querySelector("ul").innerHTML = "";
     startChat();
@@ -85,12 +87,17 @@ function logInProblem(error) {
 
 function keepconnected() {
     const promise = axios.post('https://mock-api.driven.com.br/api/v6/uol/status', userNameObject);
-    promise.then();
+    promise.then(statusSuave);
     promise.catch(statusProblem);
+}
+
+function statusSuave() {
+    checkStatus = "Ok";
 }
 
 function statusProblem() {
     alert("Perdeste conexão com o servidor");
+    checkStatus = "Not ok";
 }
 
 function sendMessages() {
@@ -116,11 +123,9 @@ function receivedMessage() {
 }
 
 function messageNotReceived(error) {
-    console.log(error)
-    //alert("Por favor, tente conectar novamente");
-    //window.location.reload();
+    alert("Por favor, tente conectar novamente");
+    window.location.reload();
 }
-
 
 createUsername();
 const checkNewMessageCycle = 3000;
