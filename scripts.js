@@ -127,7 +127,7 @@ function messageNotReceived() {
 }
 
 function checkStatus() {
-    const promisse = axios.get("https://mock-api.driven.com.br/api/v6/uol/participants")
+    const promisse = axios.get("https://mock-api.driven.com.br/api/v6/uol/participants");
     promisse.then(statusOnTheServer);
     promisse.catch(statusProblem);
 }
@@ -141,7 +141,7 @@ function statusOnTheServer(response) {
 function checkForUserName(nameFound) {
     if (nameFound.name === userName) {
         return true;
-    }
+    } return false;
 }
 
 createUsername();
