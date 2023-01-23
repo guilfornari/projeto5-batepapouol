@@ -141,7 +141,8 @@ function statusOnTheServer(response) {
 function checkForUserName(nameFound) {
     if (nameFound.name === userName) {
         return true;
-    } return false;
+    }
+    return false;
 }
 
 createUsername();
