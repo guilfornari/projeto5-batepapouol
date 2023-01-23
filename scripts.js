@@ -9,9 +9,11 @@ let messageObject = {
 };
 
 function getMessagesFromTheServer() {
-    const promise = axios.get("https://mock-api.driven.com.br/api/v6/uol/messages");
-    promise.then(getData);
-    promise.catch(informUser);
+    if (userName !== "") {
+        const promise = axios.get("https://mock-api.driven.com.br/api/v6/uol/messages");
+        promise.then(getData);
+        promise.catch(informUser);
+    }
 }
 
 function getData(response) {
@@ -74,8 +76,9 @@ function loggedIn() {
 }
 
 function logInProblem(error) {
-    if (error.response.status === 400) {
-        alert("Este nome já existe. Seja mais criativo, por favor.")
+    const badStatus = 400;
+    if (error.response.status === badStatus) {
+        alert("Este nome já existe. Seja mais criativo, por favor.");
         createUsername();
     }
 }
@@ -92,29 +95,35 @@ function statusProblem() {
 
 function sendMessages() {
 
-    const message = document.querySelector("input").value;
-    messageObject = {
-        from: userName,
-        to: "Todos",
-        text: message,
-        type: "message"
-    };
-    const promise = axios.post('https://mock-api.driven.com.br/api/v6/uol/messages', messageObject);
-    promise.then(receivedMessage);
-    promise.catch(messageNotReceived);
-    document.querySelector("input").value = "";
+    const message = document.querySelector("input").value
+
+    if (message !== "") {
+        messageObject = {
+            from: userName,
+            to: "Todos",
+            text: message,
+            type: "message"
+        };
+        const promise = axios.post('https://mock-api.driven.com.br/api/v6/uol/messages', messageObject);
+        promise.then(receivedMessage);
+        promise.catch(messageNotReceived);
+        document.querySelector("input").value = "";
+    }
 }
 
 function receivedMessage() {
     getMessagesFromTheServer();
 }
 
-function messageNotReceived() {
-    alert("Por favor, tente conectar novamente");
-    window.location.reload();
+function messageNotReceived(error) {
+    console.log(error)
+    //alert("Por favor, tente conectar novamente");
+    //window.location.reload();
 }
 
 
 createUsername();
-setInterval(getMessagesFromTheServer, 3000);
-setInterval(keepconnected, 5000);
+const checkNewMessageCycle = 3000;
+setInterval(getMessagesFromTheServer, checkNewMessageCycle);
+const sendStatusCycle = 5000;
+setInterval(keepconnected, sendStatusCycle);
