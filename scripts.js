@@ -1,6 +1,7 @@
 let messagesFromServer = [];
 let userName;
-let checkStatus;
+let participantsNames = [];
+let statusCheck = "Wrong User";
 let userNameObject = { name: "" };
 let messageObject = {
     from: "",
@@ -10,10 +11,12 @@ let messageObject = {
 };
 
 function getMessagesFromTheServer() {
-    if (userName !== "") {
+    checkStatus();
+    if (userName === statusCheck) {
         const promise = axios.get("https://mock-api.driven.com.br/api/v6/uol/messages");
         promise.then(getData);
         promise.catch(informUser);
+        statusCheck = "Wrong User";
     }
 }
 
@@ -87,22 +90,18 @@ function logInProblem(error) {
 
 function keepconnected() {
     const promise = axios.post('https://mock-api.driven.com.br/api/v6/uol/status', userNameObject);
-    promise.then(statusSuave);
+    promise.then();
     promise.catch(statusProblem);
-}
-
-function statusSuave() {
-    checkStatus = "Ok";
 }
 
 function statusProblem() {
     alert("Perdeste conexão com o servidor");
-    checkStatus = "Not ok";
+    window.location.reload();
 }
 
 function sendMessages() {
 
-    const message = document.querySelector("input").value
+    const message = document.querySelector("input").value;
 
     if (message !== "") {
         messageObject = {
@@ -122,9 +121,27 @@ function receivedMessage() {
     getMessagesFromTheServer();
 }
 
-function messageNotReceived(error) {
+function messageNotReceived() {
     alert("Por favor, tente conectar novamente");
     window.location.reload();
+}
+
+function checkStatus() {
+    const promisse = axios.get("https://mock-api.driven.com.br/api/v6/uol/participants")
+    promisse.then(statusOnTheServer);
+    promisse.catch(statusProblem);
+}
+
+function statusOnTheServer(response) {
+    participantsNames = response.data;
+    const nameFound = participantsNames.find(checkForUserName);
+    statusCheck = nameFound.name;
+}
+
+function checkForUserName(nameFound) {
+    if (nameFound.name === userName) {
+        return true;
+    }
 }
 
 createUsername();
